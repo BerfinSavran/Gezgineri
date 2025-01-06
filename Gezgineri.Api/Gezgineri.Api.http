@@ -1,0 +1,6 @@
+@Gezgineri.Api_HostAddress = http://localhost:5219
+
+GET {{Gezgineri.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
