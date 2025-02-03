@@ -1,16 +1,18 @@
-﻿using Gezgineri.Service.Abstract;
+﻿using Gezgineri.Service;
+using Gezgineri.Service.Abstract;
 using Gezgineri.Service.Concrete;
 using Gezgineri.Service.Dto.OwnerDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gezgineri.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    //[Authorize]
     public class OwnerController : ControllerBase
     {
         private readonly IOwnerService _ownerService;
-
         public OwnerController(IOwnerService ownerService)
         {
             _ownerService = ownerService;

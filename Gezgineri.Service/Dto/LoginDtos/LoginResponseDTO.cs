@@ -4,6 +4,6 @@ namespace Gezgineri.Service.Dto.LoginDtos
 {
     public class LoginResponseDTO
     {
-        public MemberDto Member { get; set; }
+        public string Token { get; set; }
     }
 }

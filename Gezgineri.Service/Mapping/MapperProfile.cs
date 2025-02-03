@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
 using Gezgineri.Entity.Models;
 using Gezgineri.Service.Dto.AgencyDtos;
+using Gezgineri.Service.Dto.CategoryDtos;
 using Gezgineri.Service.Dto.MemberDtos;
 using Gezgineri.Service.Dto.OwnerDtos;
+using Gezgineri.Service.Dto.PlaceDtos;
+using Gezgineri.Service.Dto.TourDtos;
+using Gezgineri.Service.Dto.TourRouteDtos;
 using Gezgineri.Service.Dto.TravelerDtos;
 
 
@@ -78,6 +82,15 @@ namespace Gezgineri.Service.Mapping
             CreateMap<UpdateOwnerDto, Owner>()
                  .ForPath(dest => dest.Member.FullName, opt => opt.MapFrom(src => src.FullName))
                 .ForPath(dest => dest.Member.Email, opt => opt.MapFrom(src => src.Email));
+
+            CreateMap<Category, CategoryDto>().ReverseMap();
+            
+            CreateMap<Place, PlaceDto>().ReverseMap();
+
+            CreateMap<Tour, TourDto>().ReverseMap();
+
+            CreateMap<TourRoute, TourRouteDto>().ReverseMap();
+            
         }
     }
 }

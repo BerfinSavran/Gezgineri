@@ -1,15 +1,17 @@
-﻿using Gezgineri.Service.Abstract;
+﻿using Gezgineri.Service;
+using Gezgineri.Service.Abstract;
 using Gezgineri.Service.Dto.AgencyDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gezgineri.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    //[Authorize]
     public class AgencyController : ControllerBase
     {
         private readonly IAgencyService _agencyService;
-
         public AgencyController(IAgencyService agencyService)
         {
             _agencyService = agencyService;

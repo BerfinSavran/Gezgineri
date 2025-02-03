@@ -1,11 +1,14 @@
-﻿using Gezgineri.Service.Abstract;
+﻿using Gezgineri.Service;
+using Gezgineri.Service.Abstract;
 using Gezgineri.Service.Dto.TravelerDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gezgineri.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class TravelerController : ControllerBase
     {
         private readonly ITravelerService _travelerService;
@@ -42,6 +45,7 @@ namespace Gezgineri.Api.Controllers
             var result = await _travelerService.GetTravelerByMemberIdAsync(id);
             return Ok(result);
         }
+
 
         [HttpDelete("memberId")]
         public async Task<ActionResult> DeleteTraveler(Guid id)
