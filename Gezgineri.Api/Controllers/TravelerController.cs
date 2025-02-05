@@ -8,7 +8,7 @@ namespace Gezgineri.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
+    //[Authorize]
     public class TravelerController : ControllerBase
     {
         private readonly ITravelerService _travelerService;

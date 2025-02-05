@@ -3,11 +3,14 @@ using Gezgineri.Entity.Models;
 using Gezgineri.Service.Dto.AgencyDtos;
 using Gezgineri.Service.Dto.CategoryDtos;
 using Gezgineri.Service.Dto.MemberDtos;
+using Gezgineri.Service.Dto.MyTravelDtos;
 using Gezgineri.Service.Dto.OwnerDtos;
 using Gezgineri.Service.Dto.PlaceDtos;
 using Gezgineri.Service.Dto.TourDtos;
 using Gezgineri.Service.Dto.TourRouteDtos;
 using Gezgineri.Service.Dto.TravelerDtos;
+using Gezgineri.Service.Dto.TravelPlanDtos;
+using Gezgineri.Service.Dto.TravelPlanPlaceDtos;
 
 
 namespace Gezgineri.Service.Mapping
@@ -91,6 +94,11 @@ namespace Gezgineri.Service.Mapping
 
             CreateMap<TourRoute, TourRouteDto>().ReverseMap();
             
+            CreateMap<MyTravel, MyTravelDto>().ReverseMap();
+
+            CreateMap<TravelPlan, TravelPlanDto>().ReverseMap();
+
+            CreateMap<TravelPlanPlace, TravelPlanPlaceDto>().ReverseMap();
         }
     }
 }
