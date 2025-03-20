@@ -66,10 +66,11 @@ builder.Services.AddScoped<ITourRouteService, TourRouteService>();
 builder.Services.AddScoped<ITourRouteRepository, TourRouteRepository>();
 builder.Services.AddScoped<IMyTravelService, MyTravelService>();
 builder.Services.AddScoped<IMyTravelRepository, MyTravelRepository>();
-builder.Services.AddScoped<ITravelPlanService, TravelPlanService>();
-builder.Services.AddScoped<ITravelPlanRepository, TravelPlanRepository>();
-builder.Services.AddScoped<ITravelPlanPlaceService, TravelPlanPlaceService>();
-builder.Services.AddScoped<ITravelPlanPlaceRepository, TravelPlanPlaceRepository>();
+builder.Services.AddScoped<IMyTravelPlanService, MyTravelPlanService>();
+builder.Services.AddScoped<IMyTravelPlanRepository, MyTravelPlanRepository>();
+builder.Services.AddScoped<IFavoritePlaceService, FavoritePlaceService>();
+builder.Services.AddScoped<IFavoritePlaceRepository, FavoritePlaceRepository>();
+
 builder.Services.AddScoped<TokenService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>

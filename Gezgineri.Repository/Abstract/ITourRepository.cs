@@ -9,5 +9,11 @@ namespace Gezgineri.Repository.Abstract
 {
     public interface ITourRepository : IGenericRepository<Tour>
     {
+        public Task<List<Tour>> GetToursByAgencyIdWithIncludeAsync(Guid agencyid);
+        public Task<Tour> GetByIdWithIncludeAsync(Guid id);
+        public Task<List<Tour>> GetAllWithIncludeAsync();
+        public Task<List<Tour>> GetToursStartingFromTodayAsync();
+
+
     }
 }

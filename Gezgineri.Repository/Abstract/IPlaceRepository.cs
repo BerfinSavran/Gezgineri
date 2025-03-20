@@ -1,13 +1,12 @@
 ﻿using Gezgineri.Entity.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gezgineri.Repository.Abstract
 {
     public interface IPlaceRepository :  IGenericRepository<Place>
     {
+        public Task<List<Place>> GetPlacesByOwnerIdWithIncludeAsync(Guid ownerid);
+        public Task<Place> GetByIdWithIncludeAsync(Guid id);
+        public Task<IEnumerable<Place>> GetPlacesByLocationWithIncludeAsync(string country, string? city = null);
+
     }
 }

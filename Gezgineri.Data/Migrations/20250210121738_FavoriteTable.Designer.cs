@@ -4,6 +4,7 @@ using Gezgineri.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gezgineri.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250210121738_FavoriteTable")]
+    partial class FavoriteTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -131,15 +134,12 @@ namespace Gezgineri.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -156,34 +156,6 @@ namespace Gezgineri.Data.Migrations
                     b.HasIndex("TravelerId");
 
                     b.ToTable("MyTravels");
-                });
-
-            modelBuilder.Entity("Gezgineri.Entity.Models.MyTravelPlan", b =>
-                {
-                    b.Property<Guid>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("MyTravelId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("PlaceId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("MyTravelId");
-
-                    b.HasIndex("PlaceId");
-
-                    b.ToTable("MyTravelPlans");
                 });
 
             modelBuilder.Entity("Gezgineri.Entity.Models.Owner", b =>
@@ -230,14 +202,6 @@ namespace Gezgineri.Data.Migrations
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -245,6 +209,10 @@ namespace Gezgineri.Data.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -326,13 +294,6 @@ namespace Gezgineri.Data.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -348,6 +309,46 @@ namespace Gezgineri.Data.Migrations
                     b.HasIndex("TourId");
 
                     b.ToTable("TourRoutes");
+                });
+
+            modelBuilder.Entity("Gezgineri.Entity.Models.TravelPlan", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("MyTravelId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("MyTravelId");
+
+                    b.ToTable("TravelPlans");
+                });
+
+            modelBuilder.Entity("Gezgineri.Entity.Models.TravelPlanPlace", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PlaceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TravelPlanId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("PlaceId");
+
+                    b.HasIndex("TravelPlanId");
+
+                    b.ToTable("TravelPlanPlaces");
                 });
 
             modelBuilder.Entity("Gezgineri.Entity.Models.Traveler", b =>
@@ -416,25 +417,6 @@ namespace Gezgineri.Data.Migrations
                     b.Navigation("Traveler");
                 });
 
-            modelBuilder.Entity("Gezgineri.Entity.Models.MyTravelPlan", b =>
-                {
-                    b.HasOne("Gezgineri.Entity.Models.MyTravel", "MyTravel")
-                        .WithMany()
-                        .HasForeignKey("MyTravelId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Gezgineri.Entity.Models.Place", "Place")
-                        .WithMany()
-                        .HasForeignKey("PlaceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("MyTravel");
-
-                    b.Navigation("Place");
-                });
-
             modelBuilder.Entity("Gezgineri.Entity.Models.Owner", b =>
                 {
                     b.HasOne("Gezgineri.Entity.Models.Member", "Member")
@@ -497,6 +479,36 @@ namespace Gezgineri.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Tour");
+                });
+
+            modelBuilder.Entity("Gezgineri.Entity.Models.TravelPlan", b =>
+                {
+                    b.HasOne("Gezgineri.Entity.Models.MyTravel", "MyTravel")
+                        .WithMany()
+                        .HasForeignKey("MyTravelId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("MyTravel");
+                });
+
+            modelBuilder.Entity("Gezgineri.Entity.Models.TravelPlanPlace", b =>
+                {
+                    b.HasOne("Gezgineri.Entity.Models.Place", "Place")
+                        .WithMany()
+                        .HasForeignKey("PlaceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Gezgineri.Entity.Models.TravelPlan", "TravelPlan")
+                        .WithMany()
+                        .HasForeignKey("TravelPlanId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Place");
+
+                    b.Navigation("TravelPlan");
                 });
 
             modelBuilder.Entity("Gezgineri.Entity.Models.Traveler", b =>

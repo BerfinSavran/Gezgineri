@@ -10,9 +10,11 @@ namespace Gezgineri.Api.Controllers
     public class TourController : ControllerBase
     {
         private readonly ITourService _tourService;
-        public TourController(ITourService tourService)
+        private readonly IAgencyService _agencyService;
+        public TourController(ITourService tourService, IAgencyService agencyService)
         {
             _tourService = tourService;
+            _agencyService = agencyService;
         }
 
         [HttpPost]
@@ -30,18 +32,31 @@ namespace Gezgineri.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAllTours()
+        public async Task<ActionResult> GetAllWithInclude()
         {
-            var result = await _tourService.GetAllToursAsync();
+            var result = await _tourService.GetAllWithIncludeAsync();
             return Ok(result);
         }
 
         [HttpGet("id/{id}")]
-        public async Task<ActionResult> GetTourById(Guid id)
+        public async Task<ActionResult> GetTourByIdWithInclude(Guid id)
         {
-            var result = await _tourService.GetTourByIdAsync(id);
+            var result = await _tourService.GetTourByIdWithIncludeAsync(id);
             return Ok(result);
         }
 
+        [HttpGet("agencyid")]
+        public async Task<ActionResult> GetToursByAgencyIdWithInclude(Guid agencyid)
+        {
+            var result = await _tourService.GetToursByAgencyIdWithIncludeAsync(agencyid);
+            return Ok(result);
+        }
+
+        [HttpGet("GetToursStartingFromToday")]
+        public async Task<ActionResult> GetToursStartingFromToday()
+        {
+            var result = await _tourService.GetToursStartingFromTodayAsync();
+            return Ok(result);
+        }
     }
 }

@@ -42,5 +42,12 @@ namespace Gezgineri.Api.Controllers
             var result = await _tourRouteService.GetTourRouteByIdAsync(id);
             return Ok(result);
         }
+
+        [HttpGet("tourid/{tourid}")]
+        public async Task<ActionResult> GetTourRoutesByTourId(Guid tourid)
+        {
+            var result = await _tourRouteService.GetTourRoutesByTourIdAsync(tourid);
+            return Ok(result);
+        }
     }
 }

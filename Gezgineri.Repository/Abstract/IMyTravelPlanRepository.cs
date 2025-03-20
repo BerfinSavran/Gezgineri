@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace Gezgineri.Repository.Abstract
 {
-    public interface ITravelPlanPlaceRepository : IGenericRepository<TravelPlanPlace>
+    public interface IMyTravelPlanRepository : IGenericRepository<MyTravelPlan>
     {
+        public Task<IEnumerable<MyTravelPlan?>> GetMyTravelPlansByTravelIdAsync(Guid myTravelId);
     }
 }

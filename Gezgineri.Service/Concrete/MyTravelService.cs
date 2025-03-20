@@ -3,11 +3,6 @@ using Gezgineri.Entity.Models;
 using Gezgineri.Repository.Abstract;
 using Gezgineri.Service.Abstract;
 using Gezgineri.Service.Dto.MyTravelDtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gezgineri.Service.Concrete
 {
@@ -55,6 +50,13 @@ namespace Gezgineri.Service.Concrete
                 throw new Exception("No myTravel exists with the provided identifier.");
             }
             return _mapper.Map<MyTravelDto>(myTravel);
+        }
+
+        public async Task<IEnumerable<MyTravelDto?>> GetMyTravelsByTravelerIdAsync(Guid travelerid)
+        {
+            var myTravels = await _myTravelRepository.GetMyTravelsByTravelerIdAsync(travelerid);
+            return _mapper.Map<IEnumerable<MyTravelDto>>(myTravels);
+
         }
     }
 }

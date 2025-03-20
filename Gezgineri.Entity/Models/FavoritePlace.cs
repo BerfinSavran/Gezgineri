@@ -1,19 +1,22 @@
 ﻿
+
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace Gezgineri.Entity.Models
 {
-    public class MyTravel : BaseEntity
+    public class FavoritePlace : BaseEntity
     {
+        [ForeignKey("PlaceId")]
+        public Guid PlaceId { get; set; }
+        [JsonIgnore]
+        public Place? Place { get; set; }
+
         [ForeignKey("TravelerId")]
         public Guid TravelerId { get; set; }
         [JsonIgnore]
         public Traveler? Traveler { get; set; }
-        public string Name { get; set; }
-        public string Country { get; set; }
-        public string? City { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public bool IsFavorite { get; set; } = false;
+
     }
 }

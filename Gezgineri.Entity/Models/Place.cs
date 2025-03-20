@@ -19,12 +19,12 @@ namespace Gezgineri.Entity.Models
 
         public string Name { get; set; }
         public string? Description { get; set; }
-        public string Location { get; set; }
+        public string Country { get; set; }
+        public string City { get; set; }
         public string? ImageUrl { get; set; }
         public string? VisitDuration { get; set; }
         public double? EntryPrice { get; set; }
         public int? Capacity { get; set; }
-        public bool IsFavorite { get; set; } = false;
         public EnumStatus Status { get; set; } = EnumStatus.Pending;
 
         [ForeignKey("ApprovedById")]

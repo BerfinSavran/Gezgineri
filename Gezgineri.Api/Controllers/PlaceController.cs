@@ -1,7 +1,5 @@
-﻿
-using Gezgineri.Service.Abstract;
+﻿using Gezgineri.Service.Abstract;
 using Gezgineri.Service.Dto.PlaceDtos;
-
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gezgineri.Api.Controllers
@@ -12,9 +10,11 @@ namespace Gezgineri.Api.Controllers
     public class PlaceController : ControllerBase
     {
         private readonly IPlaceService _placeService;
-        public PlaceController(IPlaceService placeService)
+        private readonly IOwnerService _ownerService;
+        public PlaceController(IPlaceService placeService, IOwnerService ownerService)
         {
             _placeService = placeService;
+            _ownerService = ownerService;
         }
 
         [HttpPost]
@@ -38,6 +38,13 @@ namespace Gezgineri.Api.Controllers
             return Ok(result);
         }
 
+        [HttpGet("location/{country}")]
+        public async Task<ActionResult> GetPlacesByLocationWithInclude(string country, [FromQuery] string? city = null)
+        {
+            var result = await _placeService.GetPlacesByLocationWithIncludeAsync(country, city);
+            return Ok(result);
+        }
+
         [HttpGet("id/{id}")]
         public async Task<ActionResult> GetPlaceById(Guid id)
         {
@@ -45,5 +52,12 @@ namespace Gezgineri.Api.Controllers
             return Ok(result);
         }
 
+        [HttpGet("ownerid")]
+        public async Task<ActionResult> GetPlacesByOwnerIdWithInclude(Guid ownerid)
+        {
+            
+            var result = await _placeService.GetPlacesByOwnerIdWithIncludeAsync(ownerid);
+            return Ok(result);
+        }
     }
 }

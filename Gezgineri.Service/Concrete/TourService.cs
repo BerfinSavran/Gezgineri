@@ -4,7 +4,6 @@ using Gezgineri.Repository.Abstract;
 using Gezgineri.Service.Abstract;
 using Gezgineri.Service.Dto.TourDtos;
 
-
 namespace Gezgineri.Service.Concrete
 {
     public class TourService : ITourService
@@ -37,20 +36,44 @@ namespace Gezgineri.Service.Concrete
             return await _tourRepository.DeleteAsync(id);
         }
 
-        public async Task<IEnumerable<TourDto?>> GetAllToursAsync()
+        public async Task<IEnumerable<ToursWithIncludeDto?>> GetAllWithIncludeAsync()
         {
-            var tours = await _tourRepository.GetAllAsync();
-            return _mapper.Map<IEnumerable<TourDto>>(tours);
+            var tours = await _tourRepository.GetAllWithIncludeAsync();
+            return _mapper.Map<IEnumerable<ToursWithIncludeDto>>(tours);
         }
 
-        public async Task<TourDto?> GetTourByIdAsync(Guid id)
+        public async Task<ToursWithIncludeDto?> GetTourByIdWithIncludeAsync(Guid id)
         {
-            var tour = await _tourRepository.GetByIdAsync(id);
+            var tour = await _tourRepository.GetByIdWithIncludeAsync(id);
             if (tour == null)
             {
                 throw new Exception("No tour exists with the provided identifier.");
             }
-            return _mapper.Map<TourDto>(tour);
+            return _mapper.Map<ToursWithIncludeDto>(tour);
         }
+
+        public async Task<List<ToursWithIncludeDto?>> GetToursByAgencyIdWithIncludeAsync(Guid agencyid)
+        {
+            var tours = await _tourRepository.GetToursByAgencyIdWithIncludeAsync(agencyid);
+
+            if (tours == null)
+            {
+                throw new Exception("No member exists with the provided identifier.");
+            }
+
+            return _mapper.Map<List<ToursWithIncludeDto?>>(tours);
+        }
+        public async Task<List<ToursWithIncludeDto?>> GetToursStartingFromTodayAsync()
+        {
+            var tours = await _tourRepository.GetToursStartingFromTodayAsync();
+
+            if (tours == null || !tours.Any())
+            {
+                throw new Exception("No tours found starting from today.");
+            }
+
+            return _mapper.Map<List<ToursWithIncludeDto?>>(tours);
+        }
+
     }
 }

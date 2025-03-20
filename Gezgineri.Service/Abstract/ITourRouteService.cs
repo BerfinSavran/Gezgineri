@@ -14,5 +14,7 @@ namespace Gezgineri.Service.Abstract
         public Task<bool> DeleteTourRouteAsync(Guid id);
         public Task<IEnumerable<TourRouteDto?>> GetAllTourRoutesAsync();
         public Task<TourRouteDto?> GetTourRouteByIdAsync(Guid id);
+        public Task<IEnumerable<TourRouteDto?>> GetTourRoutesByTourIdAsync(Guid tourId);
+
     }
 }

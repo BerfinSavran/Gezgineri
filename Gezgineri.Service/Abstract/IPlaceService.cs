@@ -1,9 +1,5 @@
-﻿using Gezgineri.Service.Dto.PlaceDtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Gezgineri.Entity.Models;
+using Gezgineri.Service.Dto.PlaceDtos;
 
 namespace Gezgineri.Service.Abstract
 {
@@ -11,8 +7,12 @@ namespace Gezgineri.Service.Abstract
     {
         public Task<bool> AddOrUpdatePlaceAsync(PlaceDto placeDto);
         public Task<bool> DeletePlaceAsync(Guid id);
-        public Task<IEnumerable<PlaceDto?>> GetAllPlacesAsync();
-        public Task<PlaceDto?> GetPlaceByIdAsync(Guid id);
+        public Task<IEnumerable<PlacesWithIncludeDto?>> GetAllPlacesAsync();
+        public Task<PlacesWithIncludeDto?> GetPlaceByIdAsync(Guid id);
+        public Task<List<PlacesWithIncludeDto?>> GetPlacesByOwnerIdWithIncludeAsync(Guid ownerid);
+        public Task<IEnumerable<PlacesWithIncludeDto?>> GetPlacesByLocationWithIncludeAsync(string country, string? city = null);
+
+
     }
 }
 

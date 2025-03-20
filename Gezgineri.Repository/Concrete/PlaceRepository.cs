@@ -1,11 +1,7 @@
 ﻿using Gezgineri.Data;
 using Gezgineri.Entity.Models;
 using Gezgineri.Repository.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Gezgineri.Repository.Concrete
 {
@@ -16,5 +12,40 @@ namespace Gezgineri.Repository.Concrete
         {
             _context = context;
         }
+
+        public async Task<List<Place>> GetPlacesByOwnerIdWithIncludeAsync(Guid ownerId)
+        {
+            return await _context.Places
+                .Where(p => p.OwnerId == ownerId)
+                .Include(p => p.Category)
+                .Include(p => p.Owner)
+                .ToListAsync();
+        }
+
+        public async Task<Place> GetByIdWithIncludeAsync(Guid id)
+        {
+            return await _context.Places
+                .Where(p => p.ID == id)
+                .Include(p => p.Category)
+                .Include(p => p.Owner)
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<Place>> GetPlacesByLocationWithIncludeAsync(string country, string? city = null)
+        {
+            var placesQuery = _context.Places
+                .Where(p => p.Country == country)
+                .Include(p => p.Category)
+                .Include(p => p.Owner!)
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(city))
+            {
+                placesQuery = placesQuery.Where(p => p.City == city);
+            }
+
+            return await placesQuery.ToListAsync();
+        }
+
     }
 }

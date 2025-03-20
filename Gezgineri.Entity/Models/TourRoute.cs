@@ -13,6 +13,8 @@ namespace Gezgineri.Entity.Models
         public string Location { get; set; }
         public int Order { get; set; }
         public DateTime Date { get; set; }
+        public string Description { get; set; }
+        public string? ImageUrl { get; set; }
 
     }
 }

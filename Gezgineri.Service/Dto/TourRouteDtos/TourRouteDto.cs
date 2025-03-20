@@ -1,10 +1,4 @@
-﻿using Gezgineri.Entity.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿
 
 namespace Gezgineri.Service.Dto.TourRouteDtos
 {
@@ -12,9 +6,10 @@ namespace Gezgineri.Service.Dto.TourRouteDtos
     {
         public Guid? ID { get; set; }
         public Guid? TourId { get; set; }
-        
         public string Location { get; set; }
         public int Order { get; set; }
         public DateTime Date { get; set; }
+        public string Description { get; set; }
+        public string? ImageUrl { get; set; }
     }
 }

@@ -13,5 +13,6 @@ namespace Gezgineri.Service.Abstract
         public Task<bool> DeleteMyTravelAsync(Guid id);
         public Task<IEnumerable<MyTravelDto?>> GetAllMyTravelsAsync();
         public Task<MyTravelDto?> GetMyTravelByIdAsync(Guid id);
+        public Task<IEnumerable<MyTravelDto?>> GetMyTravelsByTravelerIdAsync(Guid travelerid);
     }
 }

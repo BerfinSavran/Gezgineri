@@ -13,7 +13,8 @@ namespace Gezgineri.Service.Dto.MyTravelDtos
         public Guid? ID { get; set; }
         public Guid? TravelerId { get; set; }
         public string Name { get; set; }
-        public string Location { get; set; }
+        public string Country { get; set; }
+        public string? City { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
     }

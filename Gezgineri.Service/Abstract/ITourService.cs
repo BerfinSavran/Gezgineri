@@ -1,4 +1,5 @@
-﻿using Gezgineri.Service.Dto.TourDtos;
+﻿using Gezgineri.Service.Dto.PlaceDtos;
+using Gezgineri.Service.Dto.TourDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,10 @@ namespace Gezgineri.Service.Abstract
     {
         public Task<bool> AddOrUpdateTourAsync(TourDto tourDto);
         public Task<bool> DeleteTourAsync(Guid id);
-        public Task<IEnumerable<TourDto?>> GetAllToursAsync();
-        public Task<TourDto?> GetTourByIdAsync(Guid id);
+        public Task<IEnumerable<ToursWithIncludeDto?>> GetAllWithIncludeAsync();
+        public Task<ToursWithIncludeDto?> GetTourByIdWithIncludeAsync(Guid id);
+        public Task<List<ToursWithIncludeDto?>> GetToursByAgencyIdWithIncludeAsync(Guid agencyid);
+        public Task<List<ToursWithIncludeDto?>> GetToursStartingFromTodayAsync();
+
     }
 }

@@ -3,23 +3,20 @@ using Gezgineri.Entity.Models;
 using Gezgineri.Repository.Abstract;
 using Gezgineri.Service.Abstract;
 using Gezgineri.Service.Dto.PlaceDtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gezgineri.Service.Concrete
 {
     public class PlaceService : IPlaceService
     {
         private readonly IPlaceRepository _placeRepository;
+        private readonly IFavoritePlaceRepository _favoritePlaceRepository;
         private readonly IMapper _mapper;
 
-        public PlaceService(IPlaceRepository placeRepository, IMapper mapper)
+        public PlaceService(IPlaceRepository placeRepository, IMapper mapper, IFavoritePlaceRepository favoritePlaceRepository)
         {
             _mapper = mapper;
             _placeRepository = placeRepository;
+            _favoritePlaceRepository = favoritePlaceRepository;
         }
 
         public async Task<bool> AddOrUpdatePlaceAsync(PlaceDto placeDto)
@@ -38,23 +35,56 @@ namespace Gezgineri.Service.Concrete
             {
                 throw new Exception("No place exists with the provided identifier.");
             }
+
+            // Önce bu place'e ait favori kayıtları getir
+            var favoritePlaces = await _favoritePlaceRepository.GetFavoritePlaceByPlaceIdWithIncludeAsync(id);
+
+            // Eğer favori kayıtları varsa önce onları sil
+            if (favoritePlaces.Any())
+            {
+                foreach (var favorite in favoritePlaces)
+                {
+                    await _favoritePlaceRepository.DeleteAsync(favorite.ID);
+                }
+            }
+
+            // Şimdi place'i silebiliriz
             return await _placeRepository.DeleteAsync(id);
         }
 
-        public async Task<IEnumerable<PlaceDto?>> GetAllPlacesAsync()
+
+        public async Task<IEnumerable<PlacesWithIncludeDto?>> GetAllPlacesAsync()
         {
             var places = await _placeRepository.GetAllAsync();
-            return _mapper.Map<IEnumerable<PlaceDto>>(places);
+            return _mapper.Map<IEnumerable<PlacesWithIncludeDto>>(places);
         }
 
-        public async Task<PlaceDto?> GetPlaceByIdAsync(Guid id)
+        public async Task<PlacesWithIncludeDto?> GetPlaceByIdAsync(Guid id)
         {
-            var place = await _placeRepository.GetByIdAsync(id);
+            var place = await _placeRepository.GetByIdWithIncludeAsync(id);
             if (place == null)
             {
                 throw new Exception("No place exists with the provided identifier.");
             }
-            return _mapper.Map<PlaceDto>(place);
+            return _mapper.Map<PlacesWithIncludeDto>(place);
+        }
+
+        public async Task<IEnumerable<PlacesWithIncludeDto?>> GetPlacesByLocationWithIncludeAsync(string country, string? city = null)
+        {
+            var places = await _placeRepository.GetPlacesByLocationWithIncludeAsync(country, city);
+            return _mapper.Map<IEnumerable<PlacesWithIncludeDto>>(places);
+        }
+
+        public async Task<List<PlacesWithIncludeDto?>> GetPlacesByOwnerIdWithIncludeAsync(Guid ownerid)
+        {
+            var places = await _placeRepository.GetPlacesByOwnerIdWithIncludeAsync(ownerid);
+
+            if (places == null)
+            {
+                throw new Exception("No member exists with the provided identifier.");
+            }
+
+            return _mapper.Map<List<PlacesWithIncludeDto?>>(places);
         }
     }
 }

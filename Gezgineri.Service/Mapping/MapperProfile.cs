@@ -2,6 +2,7 @@
 using Gezgineri.Entity.Models;
 using Gezgineri.Service.Dto.AgencyDtos;
 using Gezgineri.Service.Dto.CategoryDtos;
+using Gezgineri.Service.Dto.FavoritePlaceDtos;
 using Gezgineri.Service.Dto.MemberDtos;
 using Gezgineri.Service.Dto.MyTravelDtos;
 using Gezgineri.Service.Dto.OwnerDtos;
@@ -9,8 +10,8 @@ using Gezgineri.Service.Dto.PlaceDtos;
 using Gezgineri.Service.Dto.TourDtos;
 using Gezgineri.Service.Dto.TourRouteDtos;
 using Gezgineri.Service.Dto.TravelerDtos;
-using Gezgineri.Service.Dto.TravelPlanDtos;
-using Gezgineri.Service.Dto.TravelPlanPlaceDtos;
+using Gezgineri.Service.Dto.MyTravelPlanDtos;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 
 namespace Gezgineri.Service.Mapping
@@ -90,15 +91,33 @@ namespace Gezgineri.Service.Mapping
             
             CreateMap<Place, PlaceDto>().ReverseMap();
 
+            CreateMap<Place, PlacesWithIncludeDto>()
+                .ForMember(dest => dest.OwnerId, opt => opt.MapFrom(src => src.Owner.ID))
+                .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Category.ID))
+                .ForMember(dest => dest.BusinessName, opt => opt.MapFrom(src => src.Owner.BusinessName))
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name));
+
             CreateMap<Tour, TourDto>().ReverseMap();
+
+            CreateMap<Tour, ToursWithIncludeDto>()
+                .ForMember(dest => dest.AgencyId, opt => opt.MapFrom(src => src.Agency.ID))
+                .ForMember(dest => dest.CompanyName, opt => opt.MapFrom(src => src.Agency.CompanyName));
 
             CreateMap<TourRoute, TourRouteDto>().ReverseMap();
             
             CreateMap<MyTravel, MyTravelDto>().ReverseMap();
 
-            CreateMap<TravelPlan, TravelPlanDto>().ReverseMap();
+            CreateMap<MyTravelPlan, MyTravelPlanDto>().ReverseMap();
 
-            CreateMap<TravelPlanPlace, TravelPlanPlaceDto>().ReverseMap();
+            CreateMap<MyTravelPlan, MyTravelPlanWithIncludeDto>()
+                .ForMember(dest => dest.PlaceId, opt => opt.MapFrom(src => src.Place.ID))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Place.Name))
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Place.Category.Name));
+
+            CreateMap<FavoritePlace, FavoritePlaceDto>()
+               .ForMember(dest => dest.PlaceId, opt => opt.MapFrom(src => src.Place != null ? src.Place.ID : Guid.Empty))
+               .ForMember(dest => dest.TravelerId, opt => opt.MapFrom(src => src.Traveler != null ? src.Traveler.ID : Guid.Empty))
+               .ReverseMap();
         }
     }
 }

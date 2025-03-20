@@ -4,16 +4,18 @@ using System.Text.Json.Serialization;
 
 namespace Gezgineri.Entity.Models
 {
-    public class TravelPlanPlace : BaseEntity
+    public class MyTravelPlan : BaseEntity
     {
-        [ForeignKey("TravelPlanId")]
-        public Guid TravelPlanId { get; set; }
+        [ForeignKey("MyTravelId")]
+        public Guid MyTravelId { get; set; }
         [JsonIgnore]
-        public TravelPlan? TravelPlan { get; set; }
+        public MyTravel? MyTravel { get; set; }
 
         [ForeignKey("PlaceId")]
         public Guid PlaceId { get; set; }
         [JsonIgnore]
         public Place? Place { get; set; }
+        public DateTime Date { get; set; }
+        public string City { get; set; }
     }
 }

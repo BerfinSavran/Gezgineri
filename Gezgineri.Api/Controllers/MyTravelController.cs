@@ -42,5 +42,12 @@ namespace Gezgineri.Api.Controllers
             var result = await _myTravelService.GetMyTravelByIdAsync(id);
             return Ok(result);
         }
+
+        [HttpGet("travelerid/{travelerid}")]
+        public async Task<ActionResult> GetMyTravelsByTravelerId(Guid travelerid)
+        {
+            var result = await _myTravelService.GetMyTravelsByTravelerIdAsync(travelerid);
+            return Ok(result);
+        }
     }
 }

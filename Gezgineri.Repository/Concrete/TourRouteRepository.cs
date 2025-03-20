@@ -1,11 +1,7 @@
 ﻿using Gezgineri.Data;
 using Gezgineri.Entity.Models;
 using Gezgineri.Repository.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Gezgineri.Repository.Concrete
 {
@@ -15,6 +11,13 @@ namespace Gezgineri.Repository.Concrete
         public TourRouteRepository(AppDbContext context) : base(context)
         {
             _context = context;
+        }
+
+        public async Task<IEnumerable<TourRoute>> GetTourRoutesByTourIdAsync(Guid tourId)
+        {
+            return await _context.TourRoutes
+                .Where(t => t.TourId == tourId)
+                .ToListAsync();
         }
     }
 }
