@@ -23,6 +23,8 @@ namespace Gezgineri.Service.Dto.PlaceDtos
         public double? EntryPrice { get; set; }
         public int? Capacity { get; set; }
         public EnumStatus Status { get; set; } = EnumStatus.Pending;
+        public double? Latitude { get; set; }
+        public double? Longitude { get; set; }
         public Guid? ApprovedById { get; set; }
     }
 }

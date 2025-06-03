@@ -26,6 +26,8 @@ namespace Gezgineri.Entity.Models
         public double? EntryPrice { get; set; }
         public int? Capacity { get; set; }
         public EnumStatus Status { get; set; } = EnumStatus.Pending;
+        public double? Latitude { get; set; }
+        public double? Longitude { get; set; }
 
         [ForeignKey("ApprovedById")]
         public Guid? ApprovedById { get; set; }
