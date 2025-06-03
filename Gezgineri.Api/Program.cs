@@ -9,6 +9,7 @@ using Gezgineri.Service.Mapping;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 using System.Text;
 
 
@@ -39,7 +40,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? string.Empty))
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? string.Empty)),
+            NameClaimType = ClaimTypes.NameIdentifier,
+            RoleClaimType = ClaimTypes.Role,
         };
     });
 
@@ -70,6 +73,8 @@ builder.Services.AddScoped<IMyTravelPlanService, MyTravelPlanService>();
 builder.Services.AddScoped<IMyTravelPlanRepository, MyTravelPlanRepository>();
 builder.Services.AddScoped<IFavoritePlaceService, FavoritePlaceService>();
 builder.Services.AddScoped<IFavoritePlaceRepository, FavoritePlaceRepository>();
+builder.Services.AddScoped<IAdminRepository, AdminRepository>();
+builder.Services.AddScoped<IAdminService, AdminService>();
 
 builder.Services.AddScoped<TokenService>();
 

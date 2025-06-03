@@ -1,5 +1,6 @@
 ﻿using Gezgineri.Service.Abstract;
 using Gezgineri.Service.Dto.TourDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gezgineri.Api.Controllers

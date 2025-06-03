@@ -1,12 +1,13 @@
 ﻿using Gezgineri.Service.Abstract;
 using Gezgineri.Service.Dto.FavoritePlaceDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gezgineri.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    //[Authorize]
+    [Authorize]
     public class FavoritePlaceController : ControllerBase
     {
         private readonly IFavoritePlaceService _favoritePlaceService;

@@ -55,7 +55,7 @@ namespace Gezgineri.Service.Concrete
 
         public async Task<IEnumerable<PlacesWithIncludeDto?>> GetAllPlacesAsync()
         {
-            var places = await _placeRepository.GetAllAsync();
+            var places = await _placeRepository.GetPlacesWithInclude();
             return _mapper.Map<IEnumerable<PlacesWithIncludeDto>>(places);
         }
 

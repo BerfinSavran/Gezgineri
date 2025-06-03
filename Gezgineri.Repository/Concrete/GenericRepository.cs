@@ -47,6 +47,7 @@ namespace Gezgineri.Repository.Concrete
             var dbSet = await _dbSet.FindAsync(entity.ID);
 
             _context.Entry(dbSet).CurrentValues.SetValues(entity);
+
             affectedRowCount = await _context.SaveChangesAsync();
 
             return affectedRowCount > 0;

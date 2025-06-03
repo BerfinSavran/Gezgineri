@@ -1,12 +1,13 @@
 ﻿using Gezgineri.Service.Abstract;
 using Gezgineri.Service.Dto.TourRouteDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gezgineri.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    //[Authorize]
+    [Authorize]
     public class TourRouteController : Controller
     {
         private readonly ITourRouteService _tourRouteService;

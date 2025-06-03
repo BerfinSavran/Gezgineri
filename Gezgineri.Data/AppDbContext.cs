@@ -20,7 +20,7 @@ namespace Gezgineri.Data
         public DbSet<TourRoute> TourRoutes { get; set; }
         public DbSet<MyTravelPlan> MyTravelPlans { get; set; }
         public DbSet<FavoritePlace> FavoritePlaces { get; set; }
-
+        public DbSet<Admin> Admins { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -45,6 +45,13 @@ namespace Gezgineri.Data
                 .WithMany() // Eğer Traveler içinde FavoritePlaces koleksiyonu yoksa
                 .HasForeignKey(fp => fp.TravelerId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Place>()
+                .HasOne(p => p.Category)
+                .WithMany()
+                .HasForeignKey(p => p.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict); // veya .OnDelete(DeleteBehavior.NoAction);
+
         }
     }
 }

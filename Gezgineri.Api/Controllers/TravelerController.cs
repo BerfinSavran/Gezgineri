@@ -8,7 +8,7 @@ namespace Gezgineri.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    //[Authorize]
+    [Authorize]
     public class TravelerController : ControllerBase
     {
         private readonly ITravelerService _travelerService;
@@ -19,6 +19,7 @@ namespace Gezgineri.Api.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult> CreateTraveler([FromBody] TravelerRegisterRequestDto requestDto)
         {
             var result = await _travelerService.AddTravelerAsync(requestDto);

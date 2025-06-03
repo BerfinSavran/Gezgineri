@@ -24,7 +24,7 @@ namespace Gezgineri.Service.Concrete
             {
                 return await _tourRepository.AddAsync(tour);
             }
-            return await _tourRepository.UpdateAsync(tour);
+            return await _tourRepository.UpdateTourAsync(tour);
         }
 
         public async Task<bool> DeleteTourAsync(Guid id)

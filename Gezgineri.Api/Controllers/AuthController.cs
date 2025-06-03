@@ -17,7 +17,7 @@ namespace Gezgineri.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-//    [Authorize]
+    [Authorize]
     public class AuthController : ControllerBase
     {
         private readonly JwtSettings _jwtSettings;

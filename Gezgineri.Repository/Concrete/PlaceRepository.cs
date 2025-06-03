@@ -13,6 +13,14 @@ namespace Gezgineri.Repository.Concrete
             _context = context;
         }
 
+        public async Task<List<Place>> GetPlacesWithInclude()
+        {
+            return await _context.Places
+                .Include(p => p.Category)
+                .Include(p => p.Owner)
+                .ToListAsync();
+        }
+
         public async Task<List<Place>> GetPlacesByOwnerIdWithIncludeAsync(Guid ownerId)
         {
             return await _context.Places

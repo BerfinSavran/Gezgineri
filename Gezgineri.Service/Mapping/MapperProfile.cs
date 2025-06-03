@@ -11,7 +11,7 @@ using Gezgineri.Service.Dto.TourDtos;
 using Gezgineri.Service.Dto.TourRouteDtos;
 using Gezgineri.Service.Dto.TravelerDtos;
 using Gezgineri.Service.Dto.MyTravelPlanDtos;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Gezgineri.Service.Dto.Admin;
 
 
 namespace Gezgineri.Service.Mapping
@@ -21,7 +21,9 @@ namespace Gezgineri.Service.Mapping
         public MapperProfile()
         {
             CreateMap<Member, MemberDto>().ReverseMap();
-            
+
+            CreateMap<Admin, AdminRegisterRequestDto>();
+
             CreateMap<Traveler, TravelerRegisterRequestDto>();
             CreateMap<Traveler, UpdateTravelerDto>();
 
@@ -30,6 +32,20 @@ namespace Gezgineri.Service.Mapping
 
             CreateMap<Owner, UpdateOwnerDto>().ReverseMap();
             CreateMap<Owner, OwnerRegisterRequestDto>();
+
+            CreateMap<Admin, AdminDto>()
+                .ForMember(dest => dest.MemberId, opt => opt.MapFrom(src => src.Member.ID))
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.Member.FullName))
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Member.Email))
+                .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Member.Password))
+                .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Member.Role));
+
+            CreateMap<AdminRegisterRequestDto, Member>()
+                .ForMember(dest => dest.ID, opt => opt.Ignore()) 
+                .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password));
+
+            CreateMap<AdminRegisterRequestDto, Admin>()
+                .ForMember(dest => dest.MemberId, opt => opt.Ignore());
 
             CreateMap<Traveler, TravelerDto>()
             .ForMember(dest => dest.MemberId, opt => opt.MapFrom(src => src.Member.ID))
@@ -101,7 +117,8 @@ namespace Gezgineri.Service.Mapping
 
             CreateMap<Tour, ToursWithIncludeDto>()
                 .ForMember(dest => dest.AgencyId, opt => opt.MapFrom(src => src.Agency.ID))
-                .ForMember(dest => dest.CompanyName, opt => opt.MapFrom(src => src.Agency.CompanyName));
+                .ForMember(dest => dest.CompanyName, opt => opt.MapFrom(src => src.Agency.CompanyName))
+                .ForMember(dest => dest.WebSiteUrl, opt => opt.MapFrom(src => src.Agency.WebSiteUrl));
 
             CreateMap<TourRoute, TourRouteDto>().ReverseMap();
             

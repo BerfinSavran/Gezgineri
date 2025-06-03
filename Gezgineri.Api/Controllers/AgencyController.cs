@@ -8,7 +8,7 @@ namespace Gezgineri.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    //[Authorize]
+    [Authorize]
     public class AgencyController : ControllerBase
     {
         private readonly IAgencyService _agencyService;
@@ -18,6 +18,7 @@ namespace Gezgineri.Api.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult> CreateAgency([FromBody] AgencyRegisterRequestDto registerDto)
         {
             var result = await _agencyService.AddAgencyAsync(registerDto);

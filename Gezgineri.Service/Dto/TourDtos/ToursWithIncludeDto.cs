@@ -15,6 +15,7 @@ namespace Gezgineri.Service.Dto.TourDtos
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string? ImageUrl { get; set; }
+        public string? WebSiteUrl { get; set; }
         public EnumStatus Status { get; set; } = EnumStatus.Pending;
         public Guid? ApprovedById { get; set; }
     }

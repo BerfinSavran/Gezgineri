@@ -19,5 +19,7 @@ namespace Gezgineri.Repository.Concrete
                 .Where(t => t.TourId == tourId)
                 .ToListAsync();
         }
+
+
     }
 }

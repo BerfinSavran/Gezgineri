@@ -47,6 +47,34 @@ namespace Gezgineri.Repository.Concrete
                 .Include(t => t.Agency)
                 .ToListAsync();
         }
+        public async Task<bool> UpdateTourAsync(Tour updatedTour)
+        {
+            // Mevcut turu buluyoruz
+            var existingTour = await _context.Tours.FirstOrDefaultAsync(t => t.ID == updatedTour.ID);
+            if (existingTour == null)
+            {
+                throw new Exception("Tur bulunamadı.");
+            }
 
+            // Tour'u güncelliyoruz
+            existingTour.Name = updatedTour.Name;
+            existingTour.Price = updatedTour.Price;
+            existingTour.Capacity = updatedTour.Capacity;
+            existingTour.EndDate = updatedTour.EndDate;
+            existingTour.ImageUrl = updatedTour.ImageUrl;
+            existingTour.Description = updatedTour.Description;
+            existingTour.StartDate = updatedTour.StartDate;
+            existingTour.Status = updatedTour.Status;
+
+            // İlgili TourRoute'ları güncelliyoruz
+            var tourRoutes = await _context.TourRoutes.Where(tr => tr.TourId == updatedTour.ID).ToListAsync();
+            for (int i = 0; i < tourRoutes.Count; i++)
+            {
+                tourRoutes[i].Date = updatedTour.StartDate.AddDays(tourRoutes[i].Order - 1);
+            }
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

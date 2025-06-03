@@ -13,6 +13,8 @@ namespace Gezgineri.Repository.Abstract
         public Task<Tour> GetByIdWithIncludeAsync(Guid id);
         public Task<List<Tour>> GetAllWithIncludeAsync();
         public Task<List<Tour>> GetToursStartingFromTodayAsync();
+        public Task<bool> UpdateTourAsync(Tour updatedTour);
+
 
 
     }

@@ -1,4 +1,5 @@
 ﻿using Gezgineri.Entity.Types;
+using System.ComponentModel.DataAnnotations.Schema;
 
 
 namespace Gezgineri.Service.Dto.PlaceDtos
@@ -16,6 +17,7 @@ namespace Gezgineri.Service.Dto.PlaceDtos
         public string? VisitDuration { get; set; }
         public double? EntryPrice { get; set; }
         public int? Capacity { get; set; }
-
+        public EnumStatus Status { get; set; }
+        public Guid? ApprovedById { get; set; }
     }
 }

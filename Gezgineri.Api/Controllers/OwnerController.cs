@@ -9,7 +9,7 @@ namespace Gezgineri.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    //[Authorize]
+    [Authorize]
     public class OwnerController : ControllerBase
     {
         private readonly IOwnerService _ownerService;
@@ -19,6 +19,7 @@ namespace Gezgineri.Api.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult> CreateOwner([FromBody] OwnerRegisterRequestDto registerDto)
         {
             var result = await _ownerService.AddOwnerAsync(registerDto);

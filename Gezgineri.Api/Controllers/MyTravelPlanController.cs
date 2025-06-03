@@ -1,12 +1,13 @@
 ﻿using Gezgineri.Service.Abstract;
 using Gezgineri.Service.Dto.MyTravelPlanDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gezgineri.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    //[Authorize]
+    [Authorize]
     public class MyTravelPlanController : ControllerBase
     {
         private readonly IMyTravelPlanService _myTravelPlanRepository;
